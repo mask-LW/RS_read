@@ -18,7 +18,7 @@ Cited times:12
 
 ## 一、研究背景
 
-不同的用户通常有不同的兴趣，同样的用户可能有不同的兴趣。因此，不同的用户可能会在点击同一篇新闻时关注不同的方面![截屏2020-09-26 下午8.49.56](/Users/mac/Library/Application Support/typora-user-images/截屏2020-09-26 下午8.49.56.png)
+不同的用户通常有不同的兴趣，同样的用户可能有不同的兴趣。因此，不同的用户可能会在点击同一篇新闻时关注不同的方面![截屏2020-09-26 下午8.49.56](https://i.loli.net/2020/10/23/4HxpmKJkntf9weq.png)
 
 
 
@@ -28,16 +28,16 @@ Cited times:12
 
 ## 二、NPA
 
-![image-20200920105922745](/Users/mac/Library/Application Support/typora-user-images/image-20200920105922745.png)
+![image-20200920105922745](https://i.loli.net/2020/10/21/gPABZJoSCLGh2Ir.png)
 
 ### News Encoder：基于新闻标题学习新闻文章的特征表示
 
-**重点：词汇层面的个性化注意网络（word-level personalized attention network）帮助NPA为不同用户选择重要词汇**
+**重点：词汇层面的个性化注意网络（word-level personalized attention network）帮助NPA为不同用户选择重要词汇 **
 
-首先从新闻的标题序列得到词嵌入向量E，将其喂入CNN中，用以捕捉新闻标题的局部信息，得到ci
-
-![image-20200921110320209](/Users/mac/Library/Application Support/typora-user-images/image-20200921110320209.png)
-
+首先从新闻的标题序列得到词嵌入向量E，将其喂入CNN中，用以捕捉新闻标题的局部信息，得到
+$$
+c_i = ReLU(F_w * e_{(i-k):(i+k)} + b_w)
+$$
 最后经过word-level personalized attention network
 
 1⃣️新闻标题的单词有些可以提供重要信息，有些不可以，比如代词，
@@ -46,19 +46,28 @@ Cited times:12
 
 因此还需要一个word-level personalized attention network，根据用户的喜好来识别和强调重要的词。
 
-![image-20200921104235320](/Users/mac/Library/Application Support/typora-user-images/image-20200921104235320.png)
+![image-20200921104235320](https://i.loli.net/2020/10/23/oPmD7UstpW2C9Iw.png)
 
 首先将用户ID嵌入表示，通过一个Dense层得到一个用户偏好query qw，然后通过偏好query和单词嵌入的交互，得到每个单词的注意力权重α。
+$$
+q_w = ReLU(V_w * e_u + v_w),(2)
+$$
 
-![image-20200921105919064](/Users/mac/Library/Application Support/typora-user-images/image-20200921105919064.png)
+$$
+a_i = c^T_itan_h(W_p * q_w + b_p),(3)
+$$
+
+$$
+\alpha_i = \frac{exp(a_i)}{\sum^M_{j=1}exp(aj)},(4)
+$$
 
 
-
-![image-20200921110340124](/Users/mac/Library/Application Support/typora-user-images/image-20200921110340124.png)
 
 最后第i个新闻标题的表示为：
+$$
+r_i = \sum^M_{j=1}\alpha_jc_j
+$$
 
-![image-20200921110439738](/Users/mac/Library/Application Support/typora-user-images/image-20200921110439738.png)
 
 **News Encoder分别得到每个用户已点击新闻的特征表示和每个候选新闻的特征表示**
 
@@ -70,15 +79,26 @@ Cited times:12
 
 同样的新闻对应不同的用户所提供的信息也是不同的。
 
-在News Encoder的基础上为了建模同样新闻对不同用户所提供的不同信息，同样采用personalized attention mechanism
+在News Encoder的基础上为了建模同样新闻对不同用户所提供的不同信息，同样采用personalized attention mechanism:
 
-![image-20200921110532859](/Users/mac/Library/Application Support/typora-user-images/image-20200921110532859.png)
 
-![image-20200921112127910](/Users/mac/Library/Application Support/typora-user-images/image-20200921112127910.png)
+$$
+q_d = ReLU(V_d * e_u+v_d)
+$$
 
-计算出不同新闻对应的权重，得到一个用户的特征表示u
+$$
+a'_i = r_i^Ttanh(W_d * q_d + b_d)
+$$
 
-![image-20200921112139439](/Users/mac/Library/Application Support/typora-user-images/image-20200921112139439.png)
+$$
+\alpha'_i = \frac{exp(a'_i)}{\sum_{j=1}^Nexp(a'_j)}
+$$
+
+计算出不同新闻对应的权重，得到一个用户的特征表示u:
+$$
+u = \sum^N_{j=1}\alpha'_jr_j
+$$
+
 
 News Encoder针对一个标题的不同单词，Uers Encoder针对一个用户点击的不同新闻。
 
@@ -96,17 +116,17 @@ Click Predictor是用来计算一个用户点击不同的候选新闻的分数
 
  K + 1个新闻由一个用户的正样本和一个用户随机选择的负样本组成
 
-首先通过新闻和用户表示向量的内积来计算候选新闻的分数ˆyi，然后通过softmax函数对其进行归一化，公式为![image-20200921114730079](/Users/mac/Library/Application Support/typora-user-images/image-20200921114730079.png)
+首先通过新闻和用户表示向量的内积来计算候选新闻的分数ˆyi，然后通过softmax函数对其进行归一化，公式为![image-20200921114730079](https://i.loli.net/2020/10/23/s2h76gYorAqHK3e.png)
 
-然后进行模型训练，将其视为K+1的分类问题，即点击新闻为正类，其余所有新闻为负类。 我们应用最大似然法来最小化正类的对数似然
+然后进行模型训练，将其视为K+1的分类问题，即点击新闻为正类，其余所有新闻为负类。 我们应用最大似然法来最小化正类的对数似然:
 
-![image-20200921114852373](/Users/mac/Library/Application Support/typora-user-images/image-20200921114852373.png)
+![image-20200921114852373](https://i.loli.net/2020/10/23/RTS3LEP2ocp8FyC.png)
 
 与现有的新闻推荐方法相比，我们的方法可以有效地挖掘负面样本中的有用信息，并进一步降低模型训练的计算成本（几乎除以K），因此可以在大量新闻点击日志上更轻松地训练模型 。
 
 ## 三、EXPERIMENTS
 
-数据集是通过一个月（即2018年12月13日至2019年1月12日）对MSN News的用户日志进行随机抽样而构建的。![image-20200921171434565](/Users/mac/Library/Application Support/typora-user-images/image-20200921171434565.png)
+数据集是通过一个月（即2018年12月13日至2019年1月12日）对MSN News的用户日志进行随机抽样而构建的。![image-20200921171434565](https://i.loli.net/2020/10/23/MDOovLuf8ElYUXr.png)
 
 最后一周作为测试集，其余为训练集，随机采样10%作为验证。
 
@@ -144,14 +164,14 @@ word和news偏好查询的大小：200
 6. DMF（2017）：典型的基于cf的新闻推荐模型充分利用了显性评分和隐性反馈
 7. DKN（2018）：深度推荐框架，设计了一个多频道CNN，融合了新闻的语义层和知识层表示，并引入了预测点击率的注意机制
 
-### result![image-20200921172507698](/Users/mac/Library/Application Support/typora-user-images/image-20200921172507698.png)
+result![image-20200921172507698](https://i.loli.net/2020/10/23/LJYF3mgI9CEv6cA.png)
 
 1. 基于神经网络的方法要比传统的方法如LibFM要好
 2. 使用负采样的DSSM和NPA比其他方法更好
 3. 使用注意力机制的方法如DFM、DKN和NPA比CNN、DSSM、Wide&Deep、DeepFM（没有使用注意力机制）要好
 4. NPA最佳
 
-![image-20200921173205884](/Users/mac/Library/Application Support/typora-user-images/image-20200921173205884.png)
+![image-20200921173205884](https://i.loli.net/2020/10/23/ysSWQexBCNziTwp.png)
 
 ###  Effectiveness of Personalized Attention
 

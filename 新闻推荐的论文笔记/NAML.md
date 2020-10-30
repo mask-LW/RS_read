@@ -38,13 +38,13 @@ user coder：基于用户浏览的新闻，使用注意力机制选择信息丰�
 
 ## 三、NAML
 
-![image-20200924214952892](/Users/mac/Library/Application Support/typora-user-images/image-20200924214952892.png)
+![image-20200924214952892](https://i.loli.net/2020/10/21/epuHU4yomIY5j7x.png)
 
 
 
 ### News Encoder
 
-![image-20200924102142791](/Users/mac/Library/Application Support/typora-user-images/image-20200924102142791.png)
+![image-20200924102142791](https://i.loli.net/2020/10/21/tD2gnfEZlNiTHsq.png)
 
 News Encoder主要由四个附件组成：
 

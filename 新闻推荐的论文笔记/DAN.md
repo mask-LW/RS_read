@@ -54,7 +54,7 @@ $$
 
 ## 二、DAN Framework
 
-![image-20200917112648267](https://i.loli.net/2020/09/17/hmA3MWZtRsdE6BX.png)
+![image-20200917112648267](https://i.loli.net/2020/10/21/64NTfo8PBkiGKby.png)
 
 （1）PCNN从用户浏览新闻历史，得到新闻的title-level 和 profile-level 的特征表示
 
@@ -80,7 +80,7 @@ $$
 
 根据用户点击的历史新闻获取用户对候选新闻的当前兴趣。
 
-![image-20200917153442365](/Users/mac/Library/Application Support/typora-user-images/image-20200917153442365.png)
+![image-20200917153442365](https://i.loli.net/2020/10/23/jFTADGcEyunlJqO.png)
 
 设计了一个基于注意力的神经网络，自动将每个点击的新闻与候选新闻进行匹配，并以不同的权重聚合用户当前的兴趣
 
@@ -90,7 +90,7 @@ $$
 
 得到的St为用户的兴趣特征表示
 
-### ARNN:Sequential Information Extractor
+### ARNN: Sequential Information Extractor
 
 ARNN是基于attention的RNN，从用户的历史阅读中捕捉用户的阅读历史的序列特征，此处假设用户每次的点击都会受到之前新闻选择的影响
 
@@ -98,13 +98,13 @@ ARNN以用户浏览的新闻历史的embedding作为输入，输出用户的阅�
 
 此处的ARNN的ANN和上面提到的ANN一样，但参数不同，通过ANN得到序列特征矩阵s，再经过integra-tion function将矩阵转化为向量h。此处有四种方法：
 
-![image-20200917160116796](/Users/mac/Library/Application Support/typora-user-images/image-20200917160116796.png)
+![image-20200917160116796](https://i.loli.net/2020/10/23/JCUW9NLGEvMm8lc.png)
 
 ### Similarity
 
 最后将h和St组合起来喂入一个全连接层，得到user embedding，通过余弦相似度计算user embedding和candidate news embedding的相似度得到概率：
 
-![image-20200917160627548](/Users/mac/Library/Application Support/typora-user-images/image-20200917160627548.png)
+![image-20200917160627548](https://i.loli.net/2020/10/23/O7t3bKZsgcXp5u6.png)
 
 ## 三、Experiment
 
@@ -134,7 +134,7 @@ ARNN以用户浏览的新闻历史的embedding作为输入，输出用户的阅�
 
 
 
-![image-20200917164345777](https://i.loli.net/2020/09/17/b8lvkTMcnjzt4Jg.png)
+![image-20200917164345777](https://i.loli.net/2020/10/21/8x7fIc6TLCApsGn.png)
 
 （-）表示输入矩阵没有使用 profile embeddings，结果表明profile embedding可以提供完整的新闻信息进行推荐
 

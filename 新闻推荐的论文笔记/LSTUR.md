@@ -158,15 +158,15 @@ For  each  sample,we collected the browsing history in last 7 days tolearn short
 
 #### Result
 
-![截屏2020-10-18 下午3.28.01](/Users/mac/Library/Application Support/typora-user-images/截屏2020-10-18 下午3.28.01.png)
+![截屏2020-10-18 下午3.28.01](https://i.loli.net/2020/10/21/IYWFu4fpoEMXlNj.png)
 
 #### Effectiveness of Long- and Short-Term User Representation
 
-![截屏2020-10-18 下午3.43.23](/Users/mac/Library/Application Support/typora-user-images/截屏2020-10-18 下午3.43.23.png)
+![截屏2020-10-18 下午3.43.23](https://i.loli.net/2020/10/21/wcEpKeZdHTFC5UI.png)
 
 #### Effectiveness of News Encoders in STUR
 
-![截屏2020-10-18 下午3.48.28](/Users/mac/Library/Application Support/typora-user-images/截屏2020-10-18 下午3.48.28.png)
+![截屏2020-10-18 下午3.48.28](https://i.loli.net/2020/10/21/ft9dRSB1QeWhcGL.png)
 
 We explore the effectiveness of GRU in en-coding news by replacing it with several other encoders, including:  1) Average:  using the averageof all the news representations in recent browsing history;
 
@@ -184,18 +184,18 @@ the  news  encoder  is  a  combination  of CNN network and an attention network 
 
 compare it with several variants, i.e., CNN, LSTM, and LSTM with attention(LSTM+Att):
 
-![截屏2020-10-18 下午4.23.13](/Users/mac/Library/Application Support/typora-user-images/截屏2020-10-18 下午4.23.13.png)
+![截屏2020-10-18 下午4.23.13](https://i.loli.net/2020/10/21/syF4wOxte8rP9nE.png)
 
 using  CNN outperform those using LSTM may be because local contexts in news titles are more important for learning news representations.
 
 #### Effectiveness of News Topic
 
-![截屏2020-10-18 下午4.34.44](/Users/mac/Library/Application Support/typora-user-images/截屏2020-10-18 下午4.34.44.png)
+![截屏2020-10-18 下午4.34.44](https://i.loli.net/2020/10/21/VYBbTCou74qZKLa.png)
 
 incorporating  either  topics or subtopics can effectively improve the performance of our approach
 
 ####  Influence of Masking Probability
 
-![截屏2020-10-18 下午4.41.52](/Users/mac/Library/Application Support/typora-user-images/截屏2020-10-18 下午4.41.52.png)
+![截屏2020-10-18 下午4.41.52](https://i.loli.net/2020/10/21/XuKTkQHxwLRIZeW.png)
 
 A moderate choice on $p$ (e.g.,0.5) is most appropriate for both LSTUR-ini andLSTUR-con methods, which can properly balancethe learning of LTUR and STUR

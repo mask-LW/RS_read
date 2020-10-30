@@ -4,7 +4,7 @@ MIND由用户点击微软新闻的日志构建而成，拥有100万用户和1600
 
 ## 目前存在的新闻推荐的数据集
 
-![截屏2020-10-13 下午8.41.20](/Users/mac/Library/Application Support/typora-user-images/截屏2020-10-13 下午8.41.20.png)
+![截屏2020-10-13 下午8.41.20](https://i.loli.net/2020/10/21/TzVLj6BM2Ng4Kmp.png)
 
 Plista4数据集：包含70,353篇新闻文章和1,095,323次点击事件。该数据集中的新闻文章是德语，用户主要来自德语世界。
 
@@ -154,7 +154,7 @@ NRMS：一种神经新闻推荐方法，利用多头自我注意从新闻文本�
 
 ### 实验结果
 
-![截屏2020-10-14 上午11.20.11](/Users/mac/Library/Application Support/typora-user-images/截屏2020-10-14 上午11.20.11.png)
+![截屏2020-10-14 上午11.20.11](https://i.loli.net/2020/10/21/LovSFxgTiNIU9zk.png)
 
 1⃣️新闻推荐方法一般比传统推荐方法要好。
 
