@@ -11,7 +11,23 @@ Authors: Sabour, Sara、 Nicholas Frosst、Hinton, Geoffrey E
 1. CNN中，对不同特征的相对位置并不关注。
 2. 池化操作虽然效果很好，增加了模型的鲁棒性，但同时丢失了模型的很多细节。 
 
-所谓“胶囊（capsules）”指的是人脑中的一种结构，它们能够很好的处理不同类型的视觉刺激并对诸如位置、形制、速度等信息进行编码。
+
+
+神经网络并不像人脑，神经网络的结构太少了，需要每层对神经元进行组合计算得到更加复杂的结果卷积层总是尝试理解局部的特征与信息。由前面低级特征组合成后面复杂与抽象的特征时，我们很可能需要使用池化操作来减少输出张量或特征图的尺寸，而这种操作实际上会丢失一些信息，比如说位置信息。
+
+
+
+
+
+所谓“胶囊（capsules）”指的是人脑中的一种结构，它们能够很好的处理不同类型的视觉刺激并对诸如位置、形
+
+制、速度等信息进行编码。
+
+
+
+## 由来
+
+目前大多数神经解剖学研究都支持（大部分哺乳类，特别是灵长类）大脑皮层中大量存在称为 Cortical minicolumn 的柱状结构（皮层微柱），其内部含有上百个神经元，并存在内部分层。这意味着人脑中的一层并不是类似现在 NN 的一层，而是有复杂的内部结构。于是 Hinton 也提出了一个对应的结构，称为 capsule（胶囊，和微柱对应）
 
 ## How the vector inputs and outputs of a capsule are computed
 
@@ -38,7 +54,9 @@ c_{ij} = \frac{exp(b_{i_j})}{\sum_kexp(b_{ik})},(3)
 $$
 ![截屏2020-10-25 下午8.36.36](https://i.loli.net/2020/10/25/eBqfwKLbFVJnTAM.png)
 
+## Dynamic routing的作用
 
+可以理解成一种实时的投票，决定不同胶囊网络之间提取的特征哪一个更显著，更有益于上一层网络的重构。
 
 ## Margin loss for digit existence
 
@@ -164,9 +182,9 @@ CNN只能做到Invariance，即最后的输出无法知道同样含义的输入�
 
 Capsule最后输出的向量的范数都是相同的，但向量内部的维度能够反映输入的差异，而最后的结果选择无视这个差异来预测结果，从而实现了equivariance。
 
+理想的目标不是为了「识别率」，而是为了得到对内容的良好的表示 （representation）
 
-
-Props：
+Pros：
 
 1⃣️在MINST实现state of art
 
@@ -302,6 +320,8 @@ geron：
 【1】https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650732855&idx=1&sn=87319e9390200f24dfd2faff4d7d364a&chksm=871b3d49b06cb45fd8a68d003310b05562d9f8ff094ed08345f112e4450f7e66e6cf71c5b571&scene=21#wechat_redirect
 
 【2】https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650731207&idx=1&sn=db9b376df658d096f3d1ee71179d9c8a&chksm=871b36b9b06cbfafb152abaa587f6730716c5069e8d9be4ee9def055bdef089d98424d7fb51b&scene=21#wechat_redirect
+
+【3】用于推荐的案例https://blog.csdn.net/qq_39388410/article/details/106432299
 
 ```python
 CapsuleNet(
